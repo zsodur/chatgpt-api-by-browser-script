@@ -1,0 +1,19 @@
+{
+  "name": "auto-gpt-use-chatgpt-plus-gpt4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsodur/Auto-GPT-Use-ChatGPT-Plus-GPT4.git"
+  },
+  "author": "zhangxiaobin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zsodur/Auto-GPT-Use-ChatGPT-Plus-GPT4/issues"
+  },
+  "homepage": "https://github.com/zsodur/Auto-GPT-Use-ChatGPT-Plus-GPT4#readme"
+}
