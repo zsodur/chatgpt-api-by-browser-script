@@ -78,13 +78,14 @@ app.post('/v1/chat/completions', async function (req, res) {
   console.log('request body', req.body)
 
   const requestPayload = `
-    Now please play the role of system and answer the user's question.
+    Now must play the role of system and answer the user's question.
 
     ${JSON.stringify(messages)}
 
-    Your answer:
+    Answer:
   `;
 
+  let lastResponse = '';
   webSocketServer.sendRequest(
     {
       text: requestPayload,
@@ -92,8 +93,9 @@ app.post('/v1/chat/completions', async function (req, res) {
     },
     (type, response) => {
       try {
-        const result = { choices: [{ message: { content: response }, delta: { content: response } }] }
-
+        response = response.trim()
+        const result = { choices: [{ message: { content: response }, delta: { content: lastResponse ? response.slice(lastResponse.length - 1): response } }] }
+        lastResponse = response
         if(type === 'stop'){
           if(stream) {
             res.write(`id: ${Date.now()}\n`);
