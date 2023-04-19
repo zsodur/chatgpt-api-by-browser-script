@@ -42,3 +42,21 @@
   "model": "gpt-4"
 }
 ```
+
+
+### 玩 Auto-GPT 例子
+
+修改Auto-GPT中llm_utils.py文件
+
+```python
+# response = openai.ChatCompletion.create(
+#     model=model,
+#     messages=messages,
+#     temperature=temperature,
+#     max_tokens=max_tokens,
+# )
+response = requests.post("http://localhost:8766/v1/chat/completions", json={"messages": messages, "model": model, "temperature": temperature, "max_tokens": max_tokens}).json()
+
+# return response.choices[0].message["content"]
+return response["choices"][0]["message"]["content"]
+```

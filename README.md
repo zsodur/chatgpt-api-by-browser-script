@@ -3,6 +3,9 @@
 - This project runs on users' browsers through the Tampermonkey script and converts the web version of ChatGPT operations into an API interface.
 - If you have a chatgpt plus account, you can use gpt-4.
 - You can use this API to do some interesting things, such as playing [Auto-GPT](https://github.com/Significant-Gravitas/Auto-GPT).
+- Not easy to be banned and easier to handle errors.
+
+![ChatGPT API Image](./demo.gif)
 
 ## Usage
 
@@ -41,4 +44,20 @@ Send a POST request to API address http://localhost:8766/v1/chat/completions
   ],
   "model": "gpt-4"
 }
+```
+
+## Expamle with Auto-GPT
+
+Modify the llm_utils.py file in Auto-GPT.
+```python
+# response = openai.ChatCompletion.create(
+#     model=model,
+#     messages=messages,
+#     temperature=temperature,
+#     max_tokens=max_tokens,
+# )
+response = requests.post("http://localhost:8766/v1/chat/completions", json={"messages": messages, "model": model, "temperature": temperature, "max_tokens": max_tokens}).json()
+
+# return response.choices[0].message["content"]
+return response["choices"][0]["message"]["content"]
 ```
