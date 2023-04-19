@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  chatgpt-webpage-api:
+    build: .
+    ports:
+      - "8765:8765"
+      - "8766:8766"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm start
