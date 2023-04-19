@@ -13,12 +13,12 @@
 	},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zsodur/Auto-GPT-Use-ChatGPT-Plus-GPT4.git"
+    "url": "git+https://github.com/zsodur/chatgpt-api-by-browser-script.git"
   },
   "author": "zhangxiaobin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zsodur/Auto-GPT-Use-ChatGPT-Plus-GPT4/issues"
+    "url": "https://github.com/zsodur/chatgpt-api-by-browser-script/issues"
   },
-  "homepage": "https://github.com/zsodur/Auto-GPT-Use-ChatGPT-Plus-GPT4#readme"
+  "homepage": "https://github.com/zsodur/chatgpt-api-by-browser-script#readme"
 }
