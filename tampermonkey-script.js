@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ChatGPT API Script
+// @name         ChatGPT API By Browser Script
 // @namespace    http://tampermonkey.net/
 // @version      1
 // @match        https://chat.openai.com/*
@@ -110,6 +110,12 @@ class App {
     window.addEventListener('load', () => {
 
       this.socket = new WebSocket(`ws://localhost:${WS_PORT}`);
+      this.socket.onopen = () => {
+        console.log('Server connected, can process requests now.');
+      }
+      this.socket.onclose = () => {
+        console.log('The server connection has been disconnected, the request cannot be processed.');
+      }
       this.socket.onmessage = (event) => {
         const data = JSON.parse(event.data)
         console.log('params', data)
