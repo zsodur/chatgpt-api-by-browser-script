@@ -1,5 +1,7 @@
 # Chatgpt API By Browser Script
 
+[中文文档](./README.zh.md)
+
 - This project runs on users' browsers through the Tampermonkey script and converts the web version of ChatGPT operations into an API interface.
 - If you have a chatgpt plus account, you can use gpt-4.
 - You can use this API to do some interesting things, such as playing [Auto-GPT](https://github.com/Significant-Gravitas/Auto-GPT).
