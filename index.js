@@ -1,6 +1,8 @@
 const WebSocket = require('ws');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const SSE = require('express-sse');
 
 const WS_PORT = 8765;
 const HTTP_PORT = 8766;
@@ -28,7 +30,7 @@ class WebSocketServer {
 
   async sendRequest(request, callback) {
     if (!this.connectedSocket) {
-      callback('');
+      callback('stop', 'api error');
       console.log('The browser connection has not been established, the request cannot be processed.');
       return;
     }
@@ -43,10 +45,11 @@ class WebSocketServer {
 
       if (jsonObject.type === 'stop') {
         this.connectedSocket.off('message', handleMessage);
-        callback(text);
+        callback('stop', text);
       } else {
         console.log('answer:', jsonObject.text)
         text = jsonObject.text
+        callback('answer', text);
       }
     };
     this.connectedSocket.on('message', handleMessage);
@@ -59,10 +62,18 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cors());
 
 app.post('/v1/chat/completions', async function (req, res) {
-  const { messages, model } = req.body;
+
+  const { messages, model, stream } = req.body;
+
+  if(stream){
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+  }
 
   console.log('request body', req.body)
 
@@ -79,12 +90,30 @@ app.post('/v1/chat/completions', async function (req, res) {
       text: requestPayload,
       model: model,
     },
-    (response) => {
+    (type, response) => {
       try {
-        const result = { choices: [{ message: { content: response } }] }
+        const result = { choices: [{ message: { content: response }, delta: { content: response } }] }
+
+        if(type === 'stop'){
+          if(stream) {
+            res.write(`id: ${Date.now()}\n`);
+            res.write(`event: event\n`);
+            res.write('data: [DONE]\n\n');
+            res.end();
+          } else {
+            res.send(result);
+          }
+        } else {
+          if(stream) {
+            res.write(`id: ${Date.now()}\n`);
+            res.write(`event: event\n`);
+            res.write(`data: ${JSON.stringify(result)}\n\n`);
+          }
+        }
         console.log('result', result)
-        res.send(result);
-      } catch (error) {}
+      } catch (error) {
+        console.log('error', error)
+      }
     }
   );
 });
