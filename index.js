@@ -29,7 +29,7 @@ class WebSocketServer {
   async sendRequest(request, callback) {
     if (!this.connectedSocket) {
       callback('');
-      throw new Error('The browser connection has not been established, the request cannot be processed.');
+      console.log('The browser connection has not been established, the request cannot be processed.');
       return;
     }
 
