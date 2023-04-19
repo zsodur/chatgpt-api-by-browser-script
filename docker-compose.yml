@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  chatgpt-webpage-api:
+  chatgpt-api-by-browser-script:
     build: .
     ports:
       - "8765:8765"
