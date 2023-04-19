@@ -32,16 +32,6 @@ function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-function sanitizeInput(input) {
-  const safeInput = input
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-
-  return safeInput;
-}
-
-
 // Main app class
 class App {
   constructor() {
@@ -68,7 +58,7 @@ class App {
       await sleep(500);
     }
     const textarea = document.querySelector('textarea');
-    textarea.value = sanitizeInput(text);
+    textarea.value = text;
     const event = new Event('input', { bubbles: true });
     textarea.dispatchEvent(event);
     await sleep(500);
