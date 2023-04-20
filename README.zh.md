@@ -64,7 +64,7 @@
 #     temperature=temperature,
 #     max_tokens=max_tokens,
 # )
-response = requests.post("http://localhost:8766/v1/chat/completions", json={"messages": messages, "model": model, "temperature": temperature, "max_tokens": max_tokens}).json()
+response = requests.post("http://localhost:8766/v1/chat/completions", json={"messages": messages, "model": model, "newChat": False, "temperature": temperature, "max_tokens": max_tokens}).json()
 
 # return response.choices[0].message["content"]
 return response["choices"][0]["message"]["content"]
