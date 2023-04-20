@@ -46,7 +46,7 @@ class WebSocketServer {
       if (jsonObject.type === 'stop') {
         this.connectedSocket.off('message', handleMessage);
         callback('stop', text);
-      } else {
+      } else if (jsonObject.type === 'answer')  {
         console.log('answer:', jsonObject.text)
         text = jsonObject.text
         callback('answer', text);
@@ -94,12 +94,17 @@ app.post('/v1/chat/completions', async function (req, res) {
     (type, response) => {
       try {
         response = response.trim()
+        let deltaContent = '';
+        if (lastResponse) {
+          const index = response.indexOf(lastResponse);
+          deltaContent = index >= 0 ? response.slice(index + lastResponse.length) : response;
+        } else {
+          deltaContent = response;
+        }
         const result = {
           choices: [{
               message: { content: response },
-              delta: {
-                  content: lastResponse ? response.slice(lastResponse.length) : response
-              }
+              delta: { content: deltaContent }
           }]
         }
         lastResponse = response
