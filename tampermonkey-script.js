@@ -50,14 +50,22 @@ class App {
         const label = document.querySelector('label.block.text-xs.text-gray-700');
         label.click();
         await sleep(500);
+        const list = [...document.querySelectorAll('li.group.relative.flex')].map(item=> ({
+          text: getTextFromNode(item),
+          node: item
+        }))
         if (model === 'gpt-4') {
-          const gpt4 = document.querySelector('li.group.relative.flex:last-child');
-          gpt4.click();
-          await sleep(500);
+          const find = list.find(item=> item.text.includes('GPT-4'))
+          if(find) {
+            find.node.click();
+            await sleep(500);
+          }
         } else {
-          const gpt3 = document.querySelector('li.group.relative.flex:first-child');
-          gpt3.click();
-          await sleep(500);
+          const find = list.find(item=> item.text.includes('Default'))
+          if(find) {
+            find.node.click();
+            await sleep(500);
+          }
         }
       } catch (e) {
         console.log(e);
