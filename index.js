@@ -77,7 +77,7 @@ app.post('/v1/chat/completions', async function (req, res) {
   console.log('request body', req.body)
 
   const requestPayload = `
-    Now must play the role of system and answer the user.
+    Now you must play the role of system and answer the user.
 
     ${JSON.stringify(messages)}
 
