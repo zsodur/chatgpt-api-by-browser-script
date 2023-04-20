@@ -79,6 +79,7 @@ class App {
       })
       this.socket.send(
         JSON.stringify({
+          type: 'answer',
           text: lastText,
         })
       );
@@ -106,6 +107,12 @@ class App {
     this.observer.observe(document.body, observerConfig);
   }
 
+  sendHeartbeat() {
+    if (this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({ type: 'heartbeat' }));
+    }
+  }
+
   init() {
     window.addEventListener('load', () => {
 
@@ -121,6 +128,8 @@ class App {
         console.log('params', data)
         this.start(data);
       };
+
+      setInterval(() => this.sendHeartbeat(), 30000);
     });
   }
 }
