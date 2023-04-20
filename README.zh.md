@@ -1,8 +1,13 @@
 # Chatgpt API By Browser Script
 
-- 这个项目通过油猴脚本（Tampermonkey）在用户浏览器上运行，并将网页版的ChatGPT操作转换为一个API接口。
-- 如果你有chatgpt plus账号，就可以使用gpt-4。
-- 你可以使用这个API来做一些有趣的事情，比如玩[Auto-GPT](https://github.com/Significant-Gravitas/Auto-GPT)。
+这个项目通过油猴脚本（Tampermonkey）在用户浏览器上运行，并将网页版的ChatGPT操作转换为一个API接口。你可以使用这个API来做一些有趣的事情，比如玩[Auto-GPT](https://github.com/Significant-Gravitas/Auto-GPT)。
+
+## 特点
+
+- API 无成本。
+- 如果你拥有chatgpt plus帐户，则可以无成本使用gpt-4 api。
+- 具有无限的上下文。
+- 不容易被禁止，更容易处理错误。
 
 ## 使用
 

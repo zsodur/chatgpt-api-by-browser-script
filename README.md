@@ -2,9 +2,12 @@
 
 [中文文档](./README.zh.md)
 
-- This project runs on users' browsers through the Tampermonkey script and converts the web version of ChatGPT operations into an API interface.
-- If you have a chatgpt plus account, you can use gpt-4.
-- You can use this API to do some interesting things, such as playing [Auto-GPT](https://github.com/Significant-Gravitas/Auto-GPT).
+This project runs on users' browsers through the Tampermonkey script and converts the web version of ChatGPT operations into an API interface. You can use this API to do some interesting things, such as playing [Auto-GPT](https://github.com/Significant-Gravitas/Auto-GPT).
+
+## Features
+- API no cost.
+- If you have a chatgpt plus account, you can use gpt-4 api.
+- Having unlimited context.
 - Not easy to be banned and easier to handle errors.
 
 ![ChatGPT API Image](./demo.gif)
