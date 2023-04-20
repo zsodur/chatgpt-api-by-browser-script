@@ -40,22 +40,24 @@ class App {
     this.stop = false
   }
 
-  async start({ text, model }) {
+  async start({ text, model, newChat }) {
     this.stop = false
-    const a = document.querySelector('a');
-    a.click();
-    await sleep(500);
-    const label = document.querySelector('label.block.text-xs.text-gray-700');
-    label.click();
-    await sleep(500);
-    if (model === 'gpt-4') {
-      const gpt4 = document.querySelector('li.group.relative.flex:last-child');
-      gpt4.click();
+    if (newChat) {
+      const a = document.querySelector('a');
+      a.click();
       await sleep(500);
-    } else {
-      const gpt3 = document.querySelector('li.group.relative.flex:first-child');
-      gpt3.click();
+      const label = document.querySelector('label.block.text-xs.text-gray-700');
+      label.click();
       await sleep(500);
+      if (model === 'gpt-4') {
+        const gpt4 = document.querySelector('li.group.relative.flex:last-child');
+        gpt4.click();
+        await sleep(500);
+      } else {
+        const gpt3 = document.querySelector('li.group.relative.flex:first-child');
+        gpt3.click();
+        await sleep(500);
+      }
     }
     const textarea = document.querySelector('textarea');
     textarea.value = text;

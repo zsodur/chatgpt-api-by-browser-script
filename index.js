@@ -66,7 +66,7 @@ app.use(cors());
 
 app.post('/v1/chat/completions', async function (req, res) {
 
-  const { messages, model, stream } = req.body;
+  const { messages, model, stream, newChat = true  } = req.body;
 
   if(stream){
     res.setHeader('Content-Type', 'text/event-stream');
@@ -90,6 +90,7 @@ app.post('/v1/chat/completions', async function (req, res) {
     {
       text: requestPayload,
       model: model,
+      newChat,
     },
     (type, response) => {
       try {
