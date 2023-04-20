@@ -2,7 +2,6 @@ const WebSocket = require('ws');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const SSE = require('express-sse');
 
 const WS_PORT = 8765;
 const HTTP_PORT = 8766;
