@@ -46,7 +46,17 @@ Send a POST request to API address http://localhost:8766/v1/chat/completions
   ],
   "model": "gpt-4"
 }
+
 ```
+
+#### API Params
+| Parameter   | Description                                      | Default | Required |
+|-------------|--------------------------------------------------|---------|----------|
+| messages    | Refer to OpenAI API documentation                |      | Yes      |
+| model       | Refer to OpenAI API documentation                |      | No       |
+| stream      | Refer to OpenAI API documentation                | false   | No       |
+| newChat     | Whether to start a new conversation              | true    | No       |
+
 
 ## Expamle with Auto-GPT
 
