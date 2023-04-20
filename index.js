@@ -94,7 +94,14 @@ app.post('/v1/chat/completions', async function (req, res) {
     (type, response) => {
       try {
         response = response.trim()
-        const result = { choices: [{ message: { content: response }, delta: { content: lastResponse ? response.slice(lastResponse.length - 1): response } }] }
+        const result = {
+          choices: [{
+              message: { content: response },
+              delta: {
+                  content: lastResponse ? response.slice(lastResponse.length) : response
+              }
+          }]
+        }
         lastResponse = response
         if(type === 'stop'){
           if(stream) {
