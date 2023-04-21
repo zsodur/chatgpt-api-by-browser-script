@@ -131,11 +131,20 @@ class App {
     window.addEventListener('load', () => {
 
       this.socket = new WebSocket(`ws://localhost:${WS_PORT}`);
+      const dom = document.createElement('div')
       this.socket.onopen = () => {
         console.log('Server connected, can process requests now.');
+        dom.style = 'position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; justify-content: center; align-items: center;';
+        dom.innerHTML = '<div style="color: green; ">API Connected !</div>';
+        document.body.appendChild(dom);
       }
       this.socket.onclose = () => {
         console.log('The server connection has been disconnected, the request cannot be processed.');
+        dom.innerHTML = '<div style="color: red; ">API Disconnected !</div>';
+      }
+      this.socket.onerror = () => {
+        console.log('Server connection error, please check the server.');
+        dom.innerHTML = '<div style="color: red; ">API Error !</div>';
       }
       this.socket.onmessage = (event) => {
         const data = JSON.parse(event.data)
