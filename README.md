@@ -31,10 +31,24 @@ This project runs on users' browsers through the Tampermonkey script and convert
 
 [https://chat.openai.com/](https://chat.openai.com/)
 
+If you see this in the upper right corner of the webpage, you have succeeded !
+
+![Success Image](./success.png)
+
 ### Step 4 Use API
 
-Send a POST request to API address http://localhost:8766/v1/chat/completions
+You now have an API address: http://localhost:8766/v1/chat/completions
 
+
+#### API Params
+| Parameter   | Description                                      | Default | Required |
+|-------------|--------------------------------------------------|---------|----------|
+| messages    | Refer to OpenAI API documentation                |      | Yes      |
+| model       | Refer to OpenAI API documentation                |      | No       |
+| stream      | Refer to OpenAI API documentation                | false   | No       |
+| newChat     | Whether to start a new conversation              | true    | No       |
+
+#### Example of Request Parameters
 ```json
 {
   "messages": [
@@ -51,20 +65,11 @@ Send a POST request to API address http://localhost:8766/v1/chat/completions
 }
 
 ```
-
-#### API Params
-| Parameter   | Description                                      | Default | Required |
-|-------------|--------------------------------------------------|---------|----------|
-| messages    | Refer to OpenAI API documentation                |      | Yes      |
-| model       | Refer to OpenAI API documentation                |      | No       |
-| stream      | Refer to OpenAI API documentation                | false   | No       |
-| newChat     | Whether to start a new conversation              | true    | No       |
-
-
-## Expamle with Auto-GPT
+## Play with Auto-GPT
 
 Modify the llm_utils.py file in Auto-GPT.
 ```python
+import requests
 # response = openai.ChatCompletion.create(
 #     model=model,
 #     messages=messages,
