@@ -8,7 +8,7 @@
 // @license MIT
 // ==/UserScript==
 
-const WS_PORT = 8765;
+const WS_URL = `ws://localhost:8765`;
 
 function getTextFromNode(node) {
   let result = '';
@@ -37,7 +37,8 @@ class App {
   constructor() {
     this.socket = null;
     this.observer = null;
-    this.stop = false
+    this.stop = false;
+    this.dom = null;
   }
 
   async start({ text, model, newChat }) {
@@ -127,34 +128,44 @@ class App {
     }
   }
 
+  connect() {
+    this.socket = new WebSocket(WS_URL);
+    this.socket.onopen = () => {
+      console.log('Server connected, can process requests now.');
+      this.dom.innerHTML = '<div style="color: green; ">API Connected !</div>';
+    }
+    this.socket.onclose = () => {
+      console.log('The server connection has been disconnected, the request cannot be processed.');
+      this.dom.innerHTML = '<div style="color: red; ">API Disconnected !</div>';
+
+      setTimeout(() => {
+        console.log('Attempting to reconnect...');
+        this.connect();
+      }, 2000);
+    }
+    this.socket.onerror = () => {
+      console.log('Server connection error, please check the server.');
+      this.dom.innerHTML = '<div style="color: red; ">API Error !</div>';
+    }
+    this.socket.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      console.log('params', data)
+      this.start(data);
+    };
+  }
+
   init() {
     window.addEventListener('load', () => {
+      this.dom = document.createElement('div');
+      this.dom.style = 'position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; justify-content: center; align-items: center;';
+      document.body.appendChild(this.dom);
 
-      this.socket = new WebSocket(`ws://localhost:${WS_PORT}`);
-      const dom = document.createElement('div')
-      this.socket.onopen = () => {
-        console.log('Server connected, can process requests now.');
-        dom.style = 'position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; justify-content: center; align-items: center;';
-        dom.innerHTML = '<div style="color: green; ">API Connected !</div>';
-        document.body.appendChild(dom);
-      }
-      this.socket.onclose = () => {
-        console.log('The server connection has been disconnected, the request cannot be processed.');
-        dom.innerHTML = '<div style="color: red; ">API Disconnected !</div>';
-      }
-      this.socket.onerror = () => {
-        console.log('Server connection error, please check the server.');
-        dom.innerHTML = '<div style="color: red; ">API Error !</div>';
-      }
-      this.socket.onmessage = (event) => {
-        const data = JSON.parse(event.data)
-        console.log('params', data)
-        this.start(data);
-      };
+      this.connect();
 
       setInterval(() => this.sendHeartbeat(), 30000);
     });
   }
+
 }
 
 (function () {
