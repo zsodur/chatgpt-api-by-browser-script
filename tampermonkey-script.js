@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ChatGPT API By Browser Script
+// @name         ChatGPT API By Browser Script Updated
 // @namespace    http://tampermonkey.net/
 // @version      1
 // @match        https://chat.openai.com/*
@@ -74,8 +74,15 @@ class App {
     const event = new Event('input', { bubbles: true });
     textarea.dispatchEvent(event);
     await sleep(500);
-    const siblingButton = textarea.nextElementSibling;
-    siblingButton.click();
+    //const siblingButton = textarea.nextElementSibling;
+    //siblingButton.click();
+
+
+    const sendButton = textarea.nextElementSibling.nextElementSibling; // Gets the next sibling twice to reach the Send button
+    console.log(sendButton); // Check that the correct button was selected
+    sendButton.click(); // Clicks the Send button
+
+
 
     this.observeMutations();
   }
